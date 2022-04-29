@@ -2,10 +2,6 @@
 
 This is test project from Sua Musica.
 
-## Print Screen
-![Screenshot_1651255439](https://user-images.githubusercontent.com/45492072/165999491-72142a1e-7046-42d6-ad1b-b4f4863a5cf9.png)
-![Screenshot_1651255444](https://user-images.githubusercontent.com/45492072/165999496-c85d86dc-5fc9-4c66-af97-49528e1d816e.png)
-
 
 ## This project used skill
     - MobX

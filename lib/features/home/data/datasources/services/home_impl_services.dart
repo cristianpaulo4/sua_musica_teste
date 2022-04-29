@@ -1,7 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:sua_musica_teste/features/home/data/datasources/localstorage/home_cache_images.dart';
 import 'package:sua_musica_teste/features/home/domain/services/home_services.dart';
