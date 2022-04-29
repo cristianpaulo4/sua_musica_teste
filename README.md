@@ -7,6 +7,9 @@ This is test project from Sua Musica.
     - Unit Test
     - Provider
     - Hive
+    - SOLID
+    - Clean Architecture
+    - TDD
 
 Run in terminal
 
