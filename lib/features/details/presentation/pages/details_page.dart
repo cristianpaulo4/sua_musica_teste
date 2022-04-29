@@ -67,7 +67,7 @@ class _DatailsPageState extends State<DatailsPage> {
                         ? ImageCacheApp(id: idImg)
                         : ImageCacheApp(id: Constants.idEmptyImage);
                   }
-                  return Container();
+                  return const Center(child: CircularProgressIndicator());
                 },
               ),
             ),
