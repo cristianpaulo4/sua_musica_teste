@@ -53,7 +53,7 @@ mixin _$HomeStore on _HomeStoreBase, Store {
       AsyncAction('_HomeStoreBase.getScreenshot', context: context);
 
   @override
-  Future<String> getScreenshot({int? idScreenshot}) {
+  Future<bool> getScreenshot({int? idScreenshot}) {
     return _$getScreenshotAsyncAction
         .run(() => super.getScreenshot(idScreenshot: idScreenshot));
   }

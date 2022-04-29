@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sua_musica_teste/shared/constants/constants.dart';
 
+import '../../../../shared/widgets/image_cache.dart';
 import '../../data/models/game_model.dart';
 import '../store/home_store.dart';
 
@@ -13,6 +17,7 @@ class ItemGamer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int? idImg = gameModel.screenshots?.first;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -22,39 +27,30 @@ class ItemGamer extends StatelessWidget {
             width: 4,
           ),
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            FutureBuilder<String>(
-              future: context.read<HomeStore>().getScreenshot(
-                    idScreenshot: gameModel.screenshots?.first,
-                  ),
-              builder: (context, url) {
-                if (url.hasData) {
-                  return Flexible(
-                    child: Image.network(
-                      url.data!,
-                      errorBuilder: (context, error, stackTrace) => const Icon(
-                        Icons.image_not_supported,
-                        color: Colors.black12,
-                        size: 100,
-                      ),
+            Flexible(
+              child: FutureBuilder<bool>(
+                future: context.read<HomeStore>().getScreenshot(
+                      idScreenshot: idImg,
                     ),
-                  );
-                }
-                if (url.hasError) {
-                  return const Icon(
-                    Icons.image_not_supported,
-                    color: Colors.black12,
-                    size: 100,
-                  );
-                }
-                return const CircularProgressIndicator();
-              },
+                builder: (context, read) {
+                  if (read.hasData) {
+                    return idImg != null
+                        ? ImageCacheApp(id: idImg)
+                        : ImageCacheApp(id: Constants.idEmptyImage);
+                  }
+                  if (read.hasError) {
+                    return idImg != null
+                        ? ImageCacheApp(id: idImg)
+                        : ImageCacheApp(id: Constants.idEmptyImage);
+                  }
+                  return const CircularProgressIndicator();
+                },
+              ),
             ),
             Text(
               gameModel.name!,

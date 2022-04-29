@@ -6,5 +6,6 @@ abstract class HomeRepository {
   Future<List<PlataformModel>> getAllPlataforms();
   Future<List<GameModel>> getGamesByPlataforms({required int idPlataforms});
   Future<List<ScreenshotModel>> getScreenshotByGame({required int idScrenshot});
+  Future<void> saveImageInCache({ required int id,  required String urlImage  });
   
 }

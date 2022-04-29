@@ -9,12 +9,15 @@ import 'package:sua_musica_teste/factory/home/home_factory_repository.dart';
 import 'package:sua_musica_teste/features/details/domain/usecases/get_genere_by_game_usecase.dart';
 import 'package:sua_musica_teste/features/details/domain/usecases/get_plataforms_usecase.dart';
 import 'package:sua_musica_teste/features/details/presentation/store/details_store.dart';
+import 'package:sua_musica_teste/features/home/data/datasources/localstorage/impl/home_cache_image_impl.dart';
 import 'package:sua_musica_teste/features/home/domain/usecases/get_games_by_plataforms.dart';
 import 'package:sua_musica_teste/features/home/domain/usecases/get_plataforms_usecase.dart';
 import 'package:sua_musica_teste/features/home/domain/usecases/get_screenshot_by_game.dart';
+import 'package:sua_musica_teste/features/home/domain/usecases/save_image_in_cache_usecase.dart';
 import 'package:sua_musica_teste/features/home/presentation/store/home_store.dart';
 import 'package:sua_musica_teste/routes/app_routes.dart';
 import 'features/home/presentation/pages/home_page.dart';
+
 
 Map<String, dynamic> mainHeader = {
   "Client-ID": "hwp41oifvpnoo5snws42h0g1b39uxx",
@@ -22,12 +25,16 @@ Map<String, dynamic> mainHeader = {
 };
 
 late Box box;
+bool isConnected = true;
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Directory appDocDir = await getTemporaryDirectory();
   Hive.init(appDocDir.path);
   box = await Hive.openBox('db');
+ 
+  
   runApp(const MyApp());
 }
 
@@ -47,6 +54,10 @@ class MyApp extends StatelessWidget {
                 homeRepository: HomeFactoryRepository.repository,
               ),
               getScreenshotUseCase: GetScreenshotUseCase(
+                repository: HomeFactoryRepository.repository,
+              ),
+              homeCacheImage: HomeCacheImageImpl(),
+              saveImageInCacheUseCase: SaveImageInCacheUseCase(
                 repository: HomeFactoryRepository.repository,
               )),
         ),

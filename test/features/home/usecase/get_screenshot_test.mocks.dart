@@ -50,4 +50,11 @@ class MockHomeService extends _i1.Mock implements _i2.HomeService {
               returnValue: Future<List<Map<String, dynamic>>>.value(
                   <Map<String, dynamic>>[]))
           as _i3.Future<List<Map<String, dynamic>>>);
+  @override
+  _i3.Future<void> saveImageInCache({int? id, String? urlImage}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #saveImageInCache, [], {#id: id, #urlImage: urlImage}),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
 }

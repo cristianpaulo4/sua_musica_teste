@@ -11,22 +11,37 @@ class HomeImplRepository implements HomeRepository {
   });
   @override
   Future<List<PlataformModel>> getAllPlataforms() async {
-    List<Map<String,dynamic>> res = await plataformService.getAllPlataforms(); 
+    List<Map<String, dynamic>> res = await plataformService.getAllPlataforms();
     var list = res.map((e) => PlataformModel.fromJson(e)).toList();
     return list;
   }
 
   @override
-  Future<List<GameModel>> getGamesByPlataforms({required int idPlataforms}) async {
-    List<Map<String,dynamic>> res = await plataformService.getGamesByPlataforms(idPlataforms: idPlataforms); 
+  Future<List<GameModel>> getGamesByPlataforms(
+      {required int idPlataforms}) async {
+    List<Map<String, dynamic>> res =
+        await plataformService.getGamesByPlataforms(idPlataforms: idPlataforms);
     var list = res.map((e) => GameModel.fromJson(e)).toList();
     return list;
   }
 
   @override
-  Future<List<ScreenshotModel>> getScreenshotByGame({required int idScrenshot}) async {
-   List<Map<String,dynamic>> res = await plataformService.getScreenshotByGame(idScreenshot: idScrenshot); 
+  Future<List<ScreenshotModel>> getScreenshotByGame(
+      {required int idScrenshot}) async {
+    List<Map<String, dynamic>> res = await plataformService.getScreenshotByGame(
+      idScreenshot: idScrenshot,
+    );
     var list = res.map((e) => ScreenshotModel.fromJson(e)).toList();
+
     return list;
+  }
+
+  @override
+  Future<void> saveImageInCache(
+      {required int id, required String urlImage}) async {
+    await plataformService.saveImageInCache(
+      id: id,
+      urlImage: urlImage,
+    );
   }
 }

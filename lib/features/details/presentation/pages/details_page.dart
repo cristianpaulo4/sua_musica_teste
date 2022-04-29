@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:sua_musica_teste/features/details/presentation/store/details_store.dart';
 import 'package:sua_musica_teste/features/home/data/models/game_model.dart';
 
+import '../../../../shared/constants/constants.dart';
+import '../../../../shared/widgets/image_cache.dart';
 import '../../../home/presentation/store/home_store.dart';
 
 class DatailsPage extends StatefulWidget {
@@ -37,6 +39,7 @@ class _DatailsPageState extends State<DatailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    int? idImg = widget.gameModel.screenshots?.first;
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -47,29 +50,26 @@ class _DatailsPageState extends State<DatailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            FutureBuilder<String>(
-              future: context.read<HomeStore>().getScreenshot(
-                    idScreenshot: widget.gameModel.screenshots?.first,
-                  ),
-              builder: (context, url) {
-                if (!url.hasData) {
-                  return Container(
-                    height: 250,
-                    color: Colors.grey.shade300,
-                  );
-                }
-                return SizedBox(
-                  height: 250,
-                  child: Image.network(
-                    url.data!,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.image_not_supported,
-                      color: Colors.black12,
-                      size: 100,
-                    ),
-                  ),
-                );
-              },
+            SizedBox(
+              height: 250,
+              child: FutureBuilder<bool>(
+                future: context
+                    .read<HomeStore>()
+                    .getScreenshot(idScreenshot: idImg),
+                builder: (context, read) {
+                  if (read.hasData) {
+                    return idImg != null
+                        ? ImageCacheApp(id: idImg)
+                        : ImageCacheApp(id: Constants.idEmptyImage);
+                  }
+                  if (read.hasError) {
+                    return idImg != null
+                        ? ImageCacheApp(id: idImg)
+                        : ImageCacheApp(id: Constants.idEmptyImage);
+                  }
+                  return Container();
+                },
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -103,7 +103,7 @@ class _DatailsPageState extends State<DatailsPage> {
               color: Colors.black45,
             ),
             Text(
-              widget.gameModel.summary!,
+              widget.gameModel.summary ?? "",
               style: styleText,
             ),
           ],
