@@ -16,6 +16,7 @@ import 'package:sua_musica_teste/features/home/domain/usecases/get_screenshot_by
 import 'package:sua_musica_teste/features/home/domain/usecases/save_image_in_cache_usecase.dart';
 import 'package:sua_musica_teste/features/home/presentation/store/home_store.dart';
 import 'package:sua_musica_teste/routes/app_routes.dart';
+import 'package:sua_musica_teste/settings/settings.dart';
 import 'features/home/presentation/pages/home_page.dart';
 
 
@@ -25,16 +26,11 @@ Map<String, dynamic> mainHeader = {
 };
 
 late Box box;
-bool isConnected = true;
+
 
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Directory appDocDir = await getTemporaryDirectory();
-  Hive.init(appDocDir.path);
-  box = await Hive.openBox('db');
- 
-  
+  await SettingsInitial.init();
   runApp(const MyApp());
 }
 

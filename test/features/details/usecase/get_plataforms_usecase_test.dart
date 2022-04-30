@@ -5,14 +5,16 @@ import 'package:sua_musica_teste/features/details/data/repositories/details_impl
 import 'package:sua_musica_teste/features/details/domain/services/details_services.dart';
 import 'package:sua_musica_teste/features/details/domain/usecases/get_plataforms_usecase.dart';
 import 'package:sua_musica_teste/features/details/data/models/plataform_model.dart';
-
+import 'package:sua_musica_teste/settings/settings.dart';
 import 'get_generer_test.mocks.dart';
 import 'mock/details_mock.dart';
 
 @GenerateMocks([DetailsServices])
-void main() {
+void main() async {
+  await SettingsInitial.init();
   late final GetPlataformsUseCase getPlataformsUseCase;
   late final MockDetailsServices services;
+  
 
   setUp(() {
     services = MockDetailsServices();

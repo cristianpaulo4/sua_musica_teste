@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:sua_musica_teste/features/home/data/datasources/localstorage/home_cache_images.dart';
 import 'package:sua_musica_teste/features/home/domain/services/home_services.dart';
-
 import '../../../../../main.dart';
 
 class HomeImplServices implements HomeService {
@@ -15,64 +14,41 @@ class HomeImplServices implements HomeService {
 
   @override
   Future<List<Map<String, dynamic>>> getAllPlataforms() async {
-    String keyName = "homePlataforms";
-    List<Map<String, dynamic>> list = [];
-    try {
-      Response res = await http.post(
-        'https://api.igdb.com/v4/platforms',
-        options: Options(
-          headers: mainHeader,
-        ),
-        data: "fields name, slug, alternative_name ;",
-      );
-      list = List.from(res.data);
-      box.put(keyName, list);
-      return list;
-    } catch (e) {
-      List localStorage = await box.get(keyName);
-      var listResult =
-          localStorage.map((e) => Map<String, dynamic>.from(e)).toList();
-      return listResult;
-    }
+    Response res = await http.post(
+      'https://api.igdb.com/v4/platforms',
+      options: Options(headers: mainHeader),
+      data: "fields name, slug, alternative_name ;",
+    );
+    return List.from(res.data);
   }
 
   @override
   Future<List<Map<String, dynamic>>> getGamesByPlataforms(
       {required int idPlataforms}) async {
-    String keyName = "$idPlataforms";
-    List<Map<String, dynamic>> list = [];
-    try {
-      Response res = await http.post('https://api.igdb.com/v4/games',
-          options: Options(
-            headers: mainHeader,
-          ),
-          data:
-              "fields slug, summary, screenshots, name, genres, platforms ; limit 30; where platforms = ($idPlataforms) ; ");
-      list = List.from(res.data);
-      box.put(keyName, list);
-      return list;
-    } catch (e) {
-      List localStorage = await box.get(keyName);
-      list = localStorage.map((e) => Map<String, dynamic>.from(e)).toList();
-      return list;
-    }
+    Response res = await http.post(
+      'https://api.igdb.com/v4/games',
+      options: Options(headers: mainHeader),
+      data:
+          "fields slug, summary, screenshots, name, genres, platforms ; limit 30; where platforms = ($idPlataforms) ; ",
+    );
+    return List.from(res.data);
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getScreenshotByGame(
-      {required int idScreenshot}) async {
+  Future<List<Map<String, dynamic>>> getScreenshotByGame({
+    required int idScreenshot,
+  }) async {
     Response res = await http.post('https://api.igdb.com/v4/screenshots',
-        options: Options(
-          headers: mainHeader,
-        ),
+        options: Options(headers: mainHeader),
         data: "fields image_id, url ;  where id = $idScreenshot ;");
-    List<Map<String, dynamic>> list = List.from(res.data);
-    return list;
+    return List.from(res.data);
   }
 
   @override
-  Future<void> saveImageInCache(
-      {required int id, required String urlImage}) async {
+  Future<void> saveImageInCache({
+    required int id,
+    required String urlImage,
+  }) async {
     try {
       Response imageDowload = await http.get(
         urlImage,
