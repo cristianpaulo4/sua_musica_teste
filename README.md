@@ -11,6 +11,7 @@ This is test project from Sua Musica.
     - SOLID
     - Clean Architecture
     - TDD
+    - Dio
 
 Run in terminal
 
