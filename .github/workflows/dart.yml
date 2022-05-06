@@ -1,14 +1,7 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
 
 name: Dart
 
-# This is a basic workflow to help you get started with Actions
 name: CI - Flutter
-
-# Controls when the workflow will run
 
   push:
     branches: [master]
@@ -35,7 +28,8 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter build web
-     # testes
+      - run: flutter test
+  
   
 
  
