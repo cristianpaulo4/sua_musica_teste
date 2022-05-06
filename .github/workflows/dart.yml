@@ -31,5 +31,6 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter build web
+      - run: flutter test
      # testes
   
